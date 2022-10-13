@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+	    tools {
+           maven 'Maven home'
+          }
+    stages {
+        stage('SCM-checkout') {
+            steps {
+                git branch: 'main', credentialsId: 'git-credentials',
+                url: 'https://github.com/Poojasvgowda/jenkins-ansible-integration.git'
+            }
+        }
+		stage('clean-compile') {
+            steps {
+                sh " mvn clean compile"
+            }
+        }
+		stage('Package') {
+            steps {
+				sh "mvn package"
+            }
+        }
+}	
+}	
